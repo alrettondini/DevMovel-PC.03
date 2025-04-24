@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId() == R.id.showItem) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 Task tTask = tasks.get(currentPosition);
-                String tMsg = "Name: " + tTask.getName() + "\n" + "Description: " + tTask.getDescription();
+                String tMsg = "Name: " + tTask.getName() + "\n" + "Description: " + tTask.getDescription() + "\n" + "Priority: " + tTask.getPriority();
                 builder.setTitle("Task details");
                 builder.setMessage(tMsg);
                 builder.setPositiveButton("OK", null);
@@ -143,6 +143,30 @@ public class MainActivity extends AppCompatActivity {
                 tasks.add(tTask);
                 taskRecyclerViewAdapter.notifyDataSetChanged();
                 mode.finish();	//encerra o action mode
+                return true;
+            }
+            else if (item.getItemId() == R.id.prioritizeMenuItem) {
+                Task tTask = tasks.get(currentPosition);
+                String p = tTask.getPriority();
+
+                switch (p) {
+                    case "Low":
+                        tTask.setPriority("Medium");
+                        break;
+                    case "Medium":
+                        tTask.setPriority("High");
+                        break;
+                    case "High":
+                    default:
+                        Toast.makeText(MainActivity.this,
+                                "Task is already at max priority",
+                                Toast.LENGTH_SHORT).show();
+                        mode.finish();
+                        return true;
+                }
+                // atualiza a lista e fecha o action mode
+                taskRecyclerViewAdapter.notifyItemChanged(currentPosition);
+                mode.finish();
                 return true;
             } else {
                 return false;

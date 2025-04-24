@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 public class Task implements Serializable {
     String name, description;
+    String priority;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
+        this.priority = "Medium";
     }
 
     public String getName() {
@@ -26,8 +28,15 @@ public class Task implements Serializable {
         this.description = description;
     }
 
+    public String getPriority() {
+        return priority;
+    }
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
-        return getName();
+        return getName() + "(" + priority + ")";
     }
 }
